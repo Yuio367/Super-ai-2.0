@@ -3,76 +3,98 @@
   padding: 0;
   box-sizing: border-box;
 }
+
 body {
-  background: #0a0a0a;
-  font-family: sans-serif;
+  background: #000;
+  height: 100vh;
   overflow: hidden;
+  touch-action: none;
+  font-family: sans-serif;
 }
-.container {
+
+.circle-wrapper {
   position: relative;
   width: 100vw;
   height: 100vh;
 }
-.center-logo {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 2;
-}
-.center-logo img {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 3px solid #00f0ff;
-}
+
 .circle {
   position: absolute;
-  width: 300px;
-  height: 300px;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  animation: rotate 20s linear infinite;
+  width: 320px;
+  height: 320px;
+  transform: translate(-50%, -50%) rotate(0deg);
+  transform-origin: center;
+  animation: spin 40s linear infinite;
 }
-@keyframes rotate {
-  from { transform: translate(-50%, -50%) rotate(0deg); }
-  to { transform: translate(-50%, -50%) rotate(360deg); }
-}
+
 .circle a {
   position: absolute;
-  width: 50px;
-  height: 50px;
-  transform-origin: 150px 150px;
+  width: 60px;
+  height: 60px;
+  transform-origin: 130px center;
 }
+
 .circle a img {
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  border: 2px solid white;
+  object-fit: cover;
+  border: 2px solid #fff;
 }
-.loader {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: black;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 5;
-  display: none;
+
+.center-logo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 2;
+  transform: translate(-50%, -50%);
 }
-.spinner {
-  border: 8px solid #ccc;
-  border-top: 8px solid #00f0ff;
+
+.center-logo img {
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
-  width: 60px;
-  height: 60px;
-  animation: spin 1s linear infinite;
+  border: 3px solid #fff;
+  object-fit: cover;
 }
+
+/* Animation */
 @keyframes spin {
-  100% { transform: rotate(360deg); }
-                            }
+  0% { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* Circle positions (12 AI tools) */
+.circle a:nth-child(1)  { transform: rotate(0deg) translateX(130px); }
+.circle a:nth-child(2)  { transform: rotate(30deg) translateX(130px); }
+.circle a:nth-child(3)  { transform: rotate(60deg) translateX(130px); }
+.circle a:nth-child(4)  { transform: rotate(90deg) translateX(130px); }
+.circle a:nth-child(5)  { transform: rotate(120deg) translateX(130px); }
+.circle a:nth-child(6)  { transform: rotate(150deg) translateX(130px); }
+.circle a:nth-child(7)  { transform: rotate(180deg) translateX(130px); }
+.circle a:nth-child(8)  { transform: rotate(210deg) translateX(130px); }
+.circle a:nth-child(9)  { transform: rotate(240deg) translateX(130px); }
+.circle a:nth-child(10) { transform: rotate(270deg) translateX(130px); }
+.circle a:nth-child(11) { transform: rotate(300deg) translateX(130px); }
+.circle a:nth-child(12) { transform: rotate(330deg) translateX(130px); }
+
+/* Mobile Responsive */
+@media (max-width: 500px) {
+  .circle {
+    width: 250px;
+    height: 250px;
+  }
+
+  .circle a {
+    width: 45px;
+    height: 45px;
+    transform-origin: 100px center;
+  }
+
+  .center-logo img {
+    width: 80px;
+    height: 80px;
+  }
+  }
