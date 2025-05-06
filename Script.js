@@ -1,39 +1,44 @@
-const tools = [
-  { name: "ChatGPT", icon: "chatgpt.png", link: "https://chat.openai.com" },
-  { name: "Gemini", icon: "gemini.png", link: "https://gemini.google.com" },
-  { name: "Claude", icon: "claude.png", link: "https://claude.ai" },
-  { name: "Perplexity", icon: "perplexity.png", link: "https://www.perplexity.ai" },
-  { name: "Bard", icon: "bard.png", link: "https://bard.google.com" },
-  { name: "Bing", icon: "bing.png", link: "https://www.bing.com/chat" },
-  { name: "You.com", icon: "youcom.png", link: "https://you.com" },
-  { name: "Phind", icon: "phind.png", link: "https://www.phind.com" },
-  { name: "WriteSonic", icon: "writesonic.png", link: "https://writesonic.com" },
-  { name: "GrokAI", icon: "grokai.png", link: "https://x.com/grok" },
-  { name: "DeepSeek", icon: "deepseek.png", link: "https://deepseek.com" },
-  { name: "OpenRouter", icon: "openrouter.png", link: "https://openrouter.ai" },
-];
+const circle = document.getElementById("circle");
+let isDragging = false;
+let startAngle = 0;
+let currentAngle = 0;
 
-const circle = document.getElementById('ai-circle');
-const radius = 120; // adjust as needed
+// Start dragging
+circle.addEventListener("mousedown", dragStart);
+circle.addEventListener("touchstart", dragStart);
 
-tools.forEach((tool, index) => {
-  const angle = (index / tools.length) * (2 * Math.PI);
-  const x = radius * Math.cos(angle);
-  const y = radius * Math.sin(angle);
+function dragStart(e) {
+  isDragging = true;
+  startAngle = getAngle(e);
+  document.addEventListener("mousemove", dragging);
+  document.addEventListener("mouseup", dragStop);
+  document.addEventListener("touchmove", dragging);
+  document.addEventListener("touchend", dragStop);
+  circle.style.animation = "none";
+}
 
-  const icon = document.createElement('div');
-  icon.className = 'ai-icon';
-  icon.style.left = 50 + x + 'px';
-  icon.style.top = 50 + y + 'px';
+// Dragging function
+function dragging(e) {
+  if (!isDragging) return;
+  const angle = getAngle(e);
+  const diff = angle - startAngle;
+  currentAngle += diff;
+  startAngle = angle;
+  circle.style.transform = `translate(-50%, -50%) rotate(${currentAngle}deg)`;
+}
 
-  const img = document.createElement('img');
-  img.src = 'images/' + tool.icon;
-  img.alt = tool.name;
+// Stop drag
+function dragStop() {
+  isDragging = false;
+  document.removeEventListener("mousemove", dragging);
+  document.removeEventListener("mouseup", dragStop);
+  document.removeEventListener("touchmove", dragging);
+  document.removeEventListener("touchend", dragStop);
+}
 
-  icon.appendChild(img);
-  icon.addEventListener('click', () => {
-    window.open(tool.link, '_blank');
-  });
-
-  circle.appendChild(icon);
-});
+// Get touch/mouse angle
+function getAngle(e) {
+  const x = (e.touches ? e.touches[0].clientX : e.clientX) - window.innerWidth / 2;
+  const y = (e.touches ? e.touches[0].clientY : e.clientY) - window.innerHeight / 2;
+  return Math.atan2(y, x) * (180 / Math.PI);
+}
