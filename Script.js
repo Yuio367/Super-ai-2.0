@@ -1,10 +1,13 @@
-const searchInput = document.getElementById('searchInput');
-const cards = document.querySelectorAll('.ai-card');
+document.getElementById('searchInput').addEventListener('input', function () {
+  const searchValue = this.value.toLowerCase();
+  const aiCards = document.querySelectorAll('.ai-card');
 
-searchInput.addEventListener('input', () => {
-  const search = searchInput.value.toLowerCase();
-  cards.forEach(card => {
+  aiCards.forEach(card => {
     const name = card.dataset.name.toLowerCase();
-    card.style.display = name.includes(search) ? 'block' : 'none';
+    if (name.includes(searchValue)) {
+      card.style.display = 'block';
+    } else {
+      card.style.display = 'none';
+    }
   });
 });
